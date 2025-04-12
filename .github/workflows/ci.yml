@@ -21,7 +21,7 @@ jobs:
       - name: Run tests
         run: |
           # Verify we have a working SQL server.
-          docker exec test0 /opt/mssql-tools/bin/sqlcmd -U sa -P m@0dl3ing -Q "SELECT @@VERSION" | grep "Microsoft SQL Server"
+          docker exec test0 /opt/mssql-tools18/bin/sqlcmd -C -U sa -P m@0dl3ing -Q "SELECT @@VERSION" | grep "Microsoft SQL Server"
 
       - name: Output logs
         if: ${{ failure() }}

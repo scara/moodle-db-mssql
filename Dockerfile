@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2019-CU22-ubuntu-20.04
+FROM mcr.microsoft.com/mssql/server:2019-CU32-ubuntu-20.04
 
 
 # Starting with SQL*Server 2017-CU6, by default, flushing became
@@ -17,10 +17,13 @@ FROM mcr.microsoft.com/mssql/server:2019-CU22-ubuntu-20.04
 # Complete phpunit runs:
 # - 2019-CU18: 4h 38m
 # - 2019-CU18 + this patch: 1h 33m
+#
+# Besides, disable SQL Server forcing all connections to be encrypted.
 USER root
 RUN /opt/mssql/bin/mssql-conf traceflag 3979 on && \
         /opt/mssql/bin/mssql-conf set control.alternatewritethrough 0 && \
-        /opt/mssql/bin/mssql-conf set control.writethrough 0
+        /opt/mssql/bin/mssql-conf set control.writethrough 0 && \
+        /opt/mssql/bin/mssql-conf set network.forceencryption 0
 
 ADD root/ /
 
